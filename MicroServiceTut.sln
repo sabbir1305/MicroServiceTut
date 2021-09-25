@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{466056FB-D0AA-4C53-BC6E-F8A8A9FE47DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaltformServiceAPI", "PaltformServiceAPI\PaltformServiceAPI.csproj", "{55AF2DB3-F10C-4D7D-B246-70A520767FED}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{55AF2DB3-F10C-4D7D-B246-70A520767FED} = {466056FB-D0AA-4C53-BC6E-F8A8A9FE47DC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B797BBF6-23FD-4B34-ACAE-F73E2849FD4A}
+	EndGlobalSection
+EndGlobal
