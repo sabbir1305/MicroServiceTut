@@ -57,6 +57,7 @@ namespace PaltformServiceAPI
             {
                 endpoints.MapControllers();
             });
+            PrepDb.Populate(app);
         }
     }
 }
