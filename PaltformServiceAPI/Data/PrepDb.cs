@@ -32,6 +32,7 @@ namespace PaltformServiceAPI.Data
                     );
 
                 context.SaveChanges();
+                Console.WriteLine("Done . . .");
             }
             else
             {

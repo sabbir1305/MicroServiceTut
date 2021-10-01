@@ -5,7 +5,11 @@ VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platform", "Platform", "{466056FB-D0AA-4C53-BC6E-F8A8A9FE47DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaltformServiceAPI", "PaltformServiceAPI\PaltformServiceAPI.csproj", "{55AF2DB3-F10C-4D7D-B246-70A520767FED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaltformServiceAPI", "PaltformServiceAPI\PaltformServiceAPI.csproj", "{55AF2DB3-F10C-4D7D-B246-70A520767FED}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Command", "Command", "{05DFD516-44F4-42CB-901B-4B4041B83244}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandService", "CommandService\CommandService.csproj", "{D887B538-4D6A-45C2-BD6D-622D4274641E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,12 +21,17 @@ Global
 		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55AF2DB3-F10C-4D7D-B246-70A520767FED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D887B538-4D6A-45C2-BD6D-622D4274641E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D887B538-4D6A-45C2-BD6D-622D4274641E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D887B538-4D6A-45C2-BD6D-622D4274641E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D887B538-4D6A-45C2-BD6D-622D4274641E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{55AF2DB3-F10C-4D7D-B246-70A520767FED} = {466056FB-D0AA-4C53-BC6E-F8A8A9FE47DC}
+		{D887B538-4D6A-45C2-BD6D-622D4274641E} = {05DFD516-44F4-42CB-901B-4B4041B83244}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B797BBF6-23FD-4B34-ACAE-F73E2849FD4A}
