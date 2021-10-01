@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PaltformServiceAPI.Data;
 using PaltformServiceAPI.Dtos;
 using PaltformServiceAPI.Models;
+using PaltformServiceAPI.SyncDataServices.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,17 @@ namespace PaltformServiceAPI.Controllers
     {
         private IPlatformRepo _repo;
         private IMapper _mapper;
+        private readonly ICommandDataClient _commandDataClient;
 
-        public PlatformsController(IPlatformRepo repo , IMapper mapper)
+        public PlatformsController(
+            IPlatformRepo repo , 
+            IMapper mapper,
+            ICommandDataClient commandDataClient
+            )
         {
             _repo = repo;
             _mapper = mapper;
+            _commandDataClient = commandDataClient;
             Console.WriteLine("Controller");
         }
 
@@ -32,7 +39,7 @@ namespace PaltformServiceAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItems));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name = "GetPlatformById")]
         public ActionResult<PlatformReadDto> GetPlatformById(int id)
         {
             var platform = _repo.GetPlatformById(id);
@@ -43,13 +50,24 @@ namespace PaltformServiceAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto platformCreateDto)
+        public async  Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto platformCreateDto)
         {
             var platform = _mapper.Map<Platform>(platformCreateDto);
 
             _repo.CreatePlatform(platform);
             _repo.SaveChanges();
             var readDto = _mapper.Map<PlatformReadDto>(platform);
+
+            try
+            {
+                await _commandDataClient.SendPatformToCommad(readDto);
+            }
+
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Failed to send message .->{ex.Message}");
+            }
+          
             return CreatedAtRoute(nameof(GetPlatformById),new {readDto.Id }, readDto);
         }
     }

@@ -1,4 +1,5 @@
-﻿using PaltformServiceAPI.Dtos;
+﻿using Microsoft.Extensions.Configuration;
+using PaltformServiceAPI.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace PaltformServiceAPI.SyncDataServices.Http
     public class HttpCommandDataClient : ICommandDataClient
     {
         private readonly HttpClient _httpClient;
+        private IConfiguration _configuration;
 
-        public HttpCommandDataClient(HttpClient httpClient)
+        public HttpCommandDataClient(HttpClient httpClient,IConfiguration configuration)
         {
             _httpClient = httpClient;
+            _configuration = configuration;
         }
         public async Task SendPatformToCommad(PlatformReadDto platform)
         {
@@ -26,7 +29,7 @@ namespace PaltformServiceAPI.SyncDataServices.Http
                 "application/json"
             );
 
-            var response = await _httpClient.PostAsync("http://localhost:13000/api/c/platforms/",httpContent);
+            var response = await _httpClient.PostAsync($"{_configuration["CommandService"]}",httpContent);
 
             if (response.IsSuccessStatusCode)
             {

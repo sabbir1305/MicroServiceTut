@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using PaltformServiceAPI.Data;
+using PaltformServiceAPI.SyncDataServices.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,17 @@ namespace PaltformServiceAPI
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMem"));
             services.AddScoped<IPlatformRepo, PlatformRepo>();
+
+            services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
+
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PaltformServiceAPI", Version = "v1" });
             });
+
+            Console.WriteLine($"--> Command service endpoint {Configuration["CommandService"]}");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +65,8 @@ namespace PaltformServiceAPI
                 endpoints.MapControllers();
             });
             PrepDb.Populate(app);
+
+
         }
     }
 }
