@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: platform-service-api-deploy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platformserviceapi
+  template:
+    metadata:
+      labels:
+        app: platformserviceapi
+    spec:
+      containers:
+        - name: platformserviceapi-container
+          image: sabbir1305/platformserviceapi:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: platforms-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: platformserviceapi
+  ports:
+  - name: platformserviceapi
+    port: 80
+    targetPort: 80
+    protocol: "TCP"
+  - name: platformgrpc
+    protocol: TCP
+    port: 666
+    targetPort: 666
+

@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: command-service-deploy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: commandservice
+  template:
+    metadata:
+      labels:
+        app: commandservice
+    spec:
+      containers:
+        - name: commandservice-container
+          image: sabbir1305/commandservice:latest
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+        
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: commands-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: commandservice
+  ports:
+  - port: 80
+    targetPort: 13000
+    protocol: "TCP"
+
