@@ -29,6 +29,11 @@ namespace CommandService.Data
             _context.Commands.Add(command);
         }
 
+        public bool ExternalPlatformExists(int externaPlatformId)
+        {
+            return _context.Platforms.Any(x => x.ExternalID == externaPlatformId);
+        }
+
         public Command GetCommand(int platformId, int commandId)
         {
             return _context.Commands

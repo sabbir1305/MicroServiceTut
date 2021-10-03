@@ -1,4 +1,7 @@
+using CommandService.AsyncDataServices;
 using CommandService.Data;
+using CommandService.EventProcessing;
+using CommandService.SyncDataServices.Grpc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +34,12 @@ namespace CommandService
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<ICommandRepo, CommandRepo>();
             services.AddScoped<IPlatformRepo, PlatformRepo>();
+
+            services.AddScoped<IPlatformDataClient, PlatformDataClient>();
+            services.AddHostedService<MessageBusSubscriber>();
+            services.AddSingleton<IEventProcessor, EventProcessor>();
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +65,8 @@ namespace CommandService
             {
                 endpoints.MapControllers();
             });
+
+            PrepDb.PrepPopulation(app);
         }
     }
 }

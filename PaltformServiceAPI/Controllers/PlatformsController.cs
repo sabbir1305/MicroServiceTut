@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PaltformServiceAPI.AsyncDataServices;
 using PaltformServiceAPI.Data;
 using PaltformServiceAPI.Dtos;
 using PaltformServiceAPI.Models;
@@ -19,21 +20,24 @@ namespace PaltformServiceAPI.Controllers
         private IPlatformRepo _repo;
         private IMapper _mapper;
         private readonly ICommandDataClient _commandDataClient;
+        private readonly IMessageBusClient _messageBus;
 
         public PlatformsController(
             IPlatformRepo repo , 
             IMapper mapper,
-            ICommandDataClient commandDataClient
+            ICommandDataClient commandDataClient,
+            IMessageBusClient messageBus
             )
         {
             _repo = repo;
             _mapper = mapper;
             _commandDataClient = commandDataClient;
+            _messageBus = messageBus;
             Console.WriteLine("Controller");
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
+        public ActionResult<IEnumerable<PlatformReadDto>> GetAllPlatforms()
         {
             var platformItems = _repo.GetAllPlatforms();
             return Ok(_mapper.Map<IEnumerable<PlatformReadDto>>(platformItems));
@@ -66,6 +70,18 @@ namespace PaltformServiceAPI.Controllers
             catch(Exception ex)
             {
                 Console.WriteLine($"Failed to send message .->{ex.Message}");
+            }
+
+            try
+            {
+                var publishedDto = _mapper.Map<PlatformPublishDto>(readDto);
+                publishedDto.Event = "Platform_Published";
+                _messageBus.PublishNewPatform(publishedDto);
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Async message failed {ex.Message}");
             }
           
             return CreatedAtRoute(nameof(GetPlatformById),new {readDto.Id }, readDto);

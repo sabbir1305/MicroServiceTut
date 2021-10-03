@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CommandService.Data;
+using CommandService.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,6 +24,24 @@ namespace CommandService.Controllers
             _platformRepo = platformRepo;
             _mapper = imapper;
         }
+
+        [HttpGet]
+        public ActionResult<IEnumerable<PlatformReadDto>> GetPlatforms()
+        {
+            Console.WriteLine("--> Getting platforms");
+
+            var platforms = _platformRepo.GetPlatforms();
+
+            return _mapper.Map<List<PlatformReadDto>>(platforms);
+        }
+
+        [HttpPost]
+        public ActionResult CreatePlatform()
+        {
+            Console.WriteLine("--> Inbound message");
+            return Ok("Sync message");
+        }
+
 
     }
 }

@@ -15,5 +15,7 @@ namespace CommandService.Data
 
         void CreateCommand(int platformId, Command command);
 
+        bool ExternalPlatformExists(int externaPlatformId);
+
     }
 }
